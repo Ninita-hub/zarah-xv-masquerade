@@ -1,4 +1,3 @@
-html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -68,7 +67,7 @@ html
             border: 2px solid var(--gold);
             padding: 40px 20px;
             position: relative;
-            background: rgba(10, 3, 5, 0.85);
+            background: rgba(10, 3, 5, 0.9);
             box-shadow: 0 0 30px rgba(88, 12, 31, 0.6), inset 0 0 15px rgba(212, 175, 55, 0.2);
             border-radius: 4px;
         }
@@ -117,7 +116,7 @@ html
             border-radius: 20px;
         }
 
-        /* Foto Principal Placeholder */
+        /* Foto Principal */
         .hero-photo-container {
             margin: 35px auto 10px;
             max-width: 320px;
@@ -131,14 +130,6 @@ html
             background: linear-gradient(135deg, rgba(88, 12, 31, 0.4), rgba(10, 3, 5, 0.9));
             box-shadow: 0 10px 25px rgba(0,0,0,0.8), 0 0 15px rgba(212, 175, 55, 0.3);
             border-radius: 5px;
-        }
-
-        .hero-photo {
-            width: 100%;
-            height: 380px;
-            object-fit: cover;
-            border: 1px solid rgba(212, 175, 55, 0.4);
-            display: block;
         }
 
         .hero-photo-placeholder {
@@ -161,13 +152,13 @@ html
             margin-bottom: 15px;
         }
 
-        /* Audio Player */
+        /* Reproductor de Música */
         .music-player {
             position: fixed;
             bottom: 20px;
             right: 20px;
             z-index: 100;
-            background: rgba(10, 3, 5, 0.9);
+            background: rgba(10, 3, 5, 0.95);
             border: 1px solid var(--gold);
             padding: 10px 15px;
             border-radius: 30px;
@@ -196,10 +187,10 @@ html
             background: var(--burgundy-light);
         }
 
-        /* Countdown */
+        /* Cuenta Regresiva */
         .countdown-section {
             text-align: center;
-            margin: 40px 0;
+            margin: 50px 0;
         }
 
         .countdown-title {
@@ -238,7 +229,7 @@ html
             letter-spacing: 1px;
         }
 
-        /* Details Card */
+        /* Tarjetas de Detalles */
         .details-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -247,7 +238,7 @@ html
         }
 
         .card {
-            background: rgba(15, 5, 8, 0.85);
+            background: rgba(15, 5, 8, 0.9);
             border: 1px solid rgba(212, 175, 55, 0.4);
             padding: 30px;
             text-align: center;
@@ -292,7 +283,40 @@ html
             box-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
         }
 
-        /* Photo Upload Section */
+        /* Galería de Recuerdos */
+        .gallery-section {
+            margin: 50px 0;
+            text-align: center;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .gallery-item {
+            height: 250px;
+            border: 1px solid var(--gold);
+            background: rgba(20, 5, 10, 0.8);
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gallery-item i {
+            font-size: 2rem;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+
+        /* Zona de Subida de Fotos */
         .photo-upload-zone {
             border: 2px dashed var(--gold);
             padding: 40px 20px;
@@ -305,7 +329,6 @@ html
         @media (max-width: 600px) {
             h1 { font-size: 2.2rem; }
             .timer-grid { grid-template-columns: repeat(2, 1fr); }
-            .hero-photo, .hero-photo-placeholder { height: 320px; }
         }
     </style>
 </head>
@@ -332,16 +355,13 @@ html
                 <h1>Zarah Inés</h1>
                 <div class="sub-title" style="font-size: 1.1rem; color: var(--gold);">Colina Acevedo</div>
                 
-                <!-- FOTO PRINCIPAL / PLACEHOLDER -->
+                <!-- FOTO PRINCIPAL -->
                 <div class="hero-photo-container">
                     <div class="hero-photo-frame">
-                        <!-- Si tienes la foto de Zarah, descomenta la siguiente línea y pon tu ruta -->
-                        <!-- <img src="zarah_principal.jpg" alt="Zarah Inés" class="hero-photo"> -->
-                        
                         <div class="hero-photo-placeholder">
                             <i class="fas fa-user-circle"></i>
                             <p style="font-family: 'Cinzel', serif; font-size: 1.1rem;">Foto de Zarah</p>
-                            <span style="font-size: 0.75rem; color: var(--text-muted); margin-top: 8px;">Reemplazar por foto principal</span>
+                            <span style="font-size: 0.75rem; color: var(--text-muted); margin-top: 8px;">Reemplazar con tu imagen principal</span>
                         </div>
                     </div>
                 </div>
@@ -394,17 +414,38 @@ html
 
             <div class="card">
                 <i class="fas fa-gift"></i>
-                <h3>Lluvia de Sobres</h3>
+                <h3>Mesa de Regalos</h3>
                 <p>Tu presencia es nuestro mejor regalo.</p>
-                <p style="margin-top: 10px; color: var(--text-muted);">Si deseas tener un detalle adicional, disponemos de:</p>
+                <p style="margin-top: 10px; color: var(--text-muted);">Aporte opcional:</p>
                 <p style="color: var(--gold-light); margin-top: 8px;">• Efectivo / Pago Móvil<br>• Binance Pay</p>
             </div>
         </div>
 
+        <!-- GALERÍA DE RECUERDOS -->
+        <section class="gallery-section">
+            <h2 style="font-family: 'Cinzel', serif; color: var(--gold); margin-bottom: 10px;">Galería de Recuerdos</h2>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">Momentos especiales en la vida de Zarah Inés</p>
+            
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <i class="fas fa-camera"></i>
+                    <span style="font-size: 0.85rem;">Foto Recuerdo 1</span>
+                </div>
+                <div class="gallery-item">
+                    <i class="fas fa-camera"></i>
+                    <span style="font-size: 0.85rem;">Foto Recuerdo 2</span>
+                </div>
+                <div class="gallery-item">
+                    <i class="fas fa-camera"></i>
+                    <span style="font-size: 0.85rem;">Foto Recuerdo 3</span>
+                </div>
+            </div>
+        </section>
+
         <!-- Módulo de Fotos para Invitados -->
         <section class="photo-upload-zone">
             <i class="fas fa-camera-retro" style="font-size: 3rem; color: var(--gold); margin-bottom: 15px;"></i>
-            <h2 style="font-family: 'Cinzel', serif; color: var(--gold-light); mb-10">Álbum Compartido</h2>
+            <h2 style="font-family: 'Cinzel', serif; color: var(--gold-light); margin-bottom: 10px;">Álbum Compartido</h2>
             <p style="color: var(--text-muted); max-width: 500px; margin: 10px auto 20px;">
                 ¡Queremos conservar cada recuerdo! Sube aquí las fotos que tengas con Zarah o las que tomes durante la fiesta.
             </p>
