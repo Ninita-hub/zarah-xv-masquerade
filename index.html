@@ -1,0 +1,508 @@
+html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>15 Años - Zarah Inés Colina Acevedo</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-dark: #0a0305;
+            --burgundy: #580c1f;
+            --burgundy-light: #80102d;
+            --gold: #d4af37;
+            --gold-light: #f3e5ab;
+            --text-light: #f5f5f5;
+            --text-muted: #c0a0a8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Canvas particles background */
+        #canvas-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            position: relative;
+        }
+
+        .gothic-frame {
+            border: 2px solid var(--gold);
+            padding: 40px 20px;
+            position: relative;
+            background: rgba(10, 3, 5, 0.85);
+            box-shadow: 0 0 30px rgba(88, 12, 31, 0.6), inset 0 0 15px rgba(212, 175, 55, 0.2);
+            border-radius: 4px;
+        }
+
+        .gothic-frame::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 20px;
+            background: var(--bg-dark);
+            border-left: 2px solid var(--gold);
+            border-right: 2px solid var(--gold);
+        }
+
+        .sub-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            letter-spacing: 4px;
+            color: var(--gold-light);
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 3rem;
+            color: var(--gold);
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .theme-tag {
+            display: inline-block;
+            background: linear-gradient(45deg, var(--burgundy), #30000a);
+            color: var(--gold-light);
+            padding: 8px 25px;
+            border: 1px solid var(--gold);
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem;
+            letter-spacing: 3px;
+            margin-top: 15px;
+            border-radius: 20px;
+        }
+
+        /* Foto Principal Placeholder */
+        .hero-photo-container {
+            margin: 35px auto 10px;
+            max-width: 320px;
+            position: relative;
+        }
+
+        .hero-photo-frame {
+            position: relative;
+            padding: 10px;
+            border: 2px solid var(--gold);
+            background: linear-gradient(135deg, rgba(88, 12, 31, 0.4), rgba(10, 3, 5, 0.9));
+            box-shadow: 0 10px 25px rgba(0,0,0,0.8), 0 0 15px rgba(212, 175, 55, 0.3);
+            border-radius: 5px;
+        }
+
+        .hero-photo {
+            width: 100%;
+            height: 380px;
+            object-fit: cover;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            display: block;
+        }
+
+        .hero-photo-placeholder {
+            width: 100%;
+            height: 380px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(20, 5, 10, 0.9);
+            border: 1px dashed var(--gold);
+            color: var(--gold-light);
+            text-align: center;
+            padding: 20px;
+        }
+
+        .hero-photo-placeholder i {
+            font-size: 3rem;
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+
+        /* Audio Player */
+        .music-player {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            background: rgba(10, 3, 5, 0.9);
+            border: 1px solid var(--gold);
+            padding: 10px 15px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.8);
+        }
+
+        .music-btn {
+            background: var(--burgundy);
+            color: var(--gold);
+            border: 1px solid var(--gold);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .music-btn:hover {
+            transform: scale(1.1);
+            background: var(--burgundy-light);
+        }
+
+        /* Countdown */
+        .countdown-section {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .countdown-title {
+            font-family: 'Cinzel', serif;
+            color: var(--gold);
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+        }
+
+        .timer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .timer-box {
+            background: rgba(88, 12, 31, 0.3);
+            border: 1px solid var(--gold);
+            padding: 15px 5px;
+            border-radius: 5px;
+        }
+
+        .timer-num {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            color: var(--gold-light);
+            font-weight: bold;
+        }
+
+        .timer-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Details Card */
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        .card {
+            background: rgba(15, 5, 8, 0.85);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            padding: 30px;
+            text-align: center;
+            border-radius: 5px;
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--gold);
+        }
+
+        .card i {
+            font-size: 2.5rem;
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--gold-light);
+            margin-bottom: 15px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(45deg, var(--burgundy), var(--burgundy-light));
+            color: var(--gold-light);
+            padding: 12px 25px;
+            text-decoration: none;
+            font-family: 'Cinzel', serif;
+            border: 1px solid var(--gold);
+            border-radius: 4px;
+            margin-top: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background: var(--gold);
+            color: var(--bg-dark);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
+        }
+
+        /* Photo Upload Section */
+        .photo-upload-zone {
+            border: 2px dashed var(--gold);
+            padding: 40px 20px;
+            text-align: center;
+            background: rgba(88, 12, 31, 0.15);
+            border-radius: 8px;
+            margin: 40px 0;
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 2.2rem; }
+            .timer-grid { grid-template-columns: repeat(2, 1fr); }
+            .hero-photo, .hero-photo-placeholder { height: 320px; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="canvas-bg"></canvas>
+
+    <!-- Reproductor de Música -->
+    <div class="music-player">
+        <button class="music-btn" id="play-btn"><i class="fas fa-play"></i></button>
+        <div style="font-size: 0.8rem;">
+            <div style="color: var(--gold-light); font-weight: 600;">A Thousand Years</div>
+            <div style="color: var(--text-muted);">Christina Perri</div>
+        </div>
+        <audio id="bg-audio" loop>
+            <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="gothic-frame">
+                <div class="sub-title">Mis Quince Años</div>
+                <h1>Zarah Inés</h1>
+                <div class="sub-title" style="font-size: 1.1rem; color: var(--gold);">Colina Acevedo</div>
+                
+                <!-- FOTO PRINCIPAL / PLACEHOLDER -->
+                <div class="hero-photo-container">
+                    <div class="hero-photo-frame">
+                        <!-- Si tienes la foto de Zarah, descomenta la siguiente línea y pon tu ruta -->
+                        <!-- <img src="zarah_principal.jpg" alt="Zarah Inés" class="hero-photo"> -->
+                        
+                        <div class="hero-photo-placeholder">
+                            <i class="fas fa-user-circle"></i>
+                            <p style="font-family: 'Cinzel', serif; font-size: 1.1rem;">Foto de Zarah</p>
+                            <span style="font-size: 0.75rem; color: var(--text-muted); margin-top: 8px;">Reemplazar por foto principal</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="theme-tag"><i class="fas fa-mask"></i> Mascarada Gótica</div>
+            </div>
+        </header>
+
+        <!-- Cuenta Regresiva -->
+        <section class="countdown-section">
+            <h2 class="countdown-title">El Gran Día Se Aproxima</h2>
+            <div class="timer-grid">
+                <div class="timer-box">
+                    <div class="timer-num" id="days">00</div>
+                    <div class="timer-label">Días</div>
+                </div>
+                <div class="timer-box">
+                    <div class="timer-num" id="hours">00</div>
+                    <div class="timer-label">Horas</div>
+                </div>
+                <div class="timer-box">
+                    <div class="timer-num" id="minutes">00</div>
+                    <div class="timer-label">Minutos</div>
+                </div>
+                <div class="timer-box">
+                    <div class="timer-num" id="seconds">00</div>
+                    <div class="timer-label">Segundos</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Detalles del Evento -->
+        <div class="details-grid">
+            <div class="card">
+                <i class="fas fa-glass-cheers"></i>
+                <h3>Recepción & Fiesta</h3>
+                <p><strong>Fecha:</strong> 29 de Mayo del 2027</p>
+                <p><strong>Hora:</strong> 7:00 PM</p>
+                <p style="margin-top: 10px; color: var(--text-muted);">Acompáñanos a celebrar una noche mágica e inolvidable.</p>
+                <a href="https://maps.google.com" target="_blank" class="btn"><i class="fas fa-map-marker-alt"></i> Ver Ubicación</a>
+            </div>
+
+            <div class="card">
+                <i class="fas fa-user-tie"></i>
+                <h3>Código de Vestimenta</h3>
+                <p><strong>Formal / Etiqueta</strong></p>
+                <p style="margin-top: 10px; color: var(--text-muted);">Te invitamos a portar tu mejor máscara para la Mascarada Gótica.</p>
+                <p style="color: var(--gold-light); margin-top: 5px;">Colores: Negro, Vino & Dorado</p>
+            </div>
+
+            <div class="card">
+                <i class="fas fa-gift"></i>
+                <h3>Lluvia de Sobres</h3>
+                <p>Tu presencia es nuestro mejor regalo.</p>
+                <p style="margin-top: 10px; color: var(--text-muted);">Si deseas tener un detalle adicional, disponemos de:</p>
+                <p style="color: var(--gold-light); margin-top: 8px;">• Efectivo / Pago Móvil<br>• Binance Pay</p>
+            </div>
+        </div>
+
+        <!-- Módulo de Fotos para Invitados -->
+        <section class="photo-upload-zone">
+            <i class="fas fa-camera-retro" style="font-size: 3rem; color: var(--gold); margin-bottom: 15px;"></i>
+            <h2 style="font-family: 'Cinzel', serif; color: var(--gold-light); mb-10">Álbum Compartido</h2>
+            <p style="color: var(--text-muted); max-width: 500px; margin: 10px auto 20px;">
+                ¡Queremos conservar cada recuerdo! Sube aquí las fotos que tengas con Zarah o las que tomes durante la fiesta.
+            </p>
+            <a href="https://photos.google.com" target="_blank" class="btn"><i class="fas fa-cloud-upload-alt"></i> Subir Mis Fotos</a>
+        </section>
+
+        <!-- Confirmación RSVP -->
+        <section style="text-align: center; margin: 50px 0;">
+            <h2 style="font-family: 'Cinzel', serif; color: var(--gold); margin-bottom: 15px;">Confirmación de Asistencia</h2>
+            <p style="color: var(--text-muted); margin-bottom: 25px;">Por favor confirma tu presencia antes del 15 de Mayo de 2027.</p>
+            <a href="https://wa.me/?text=¡Hola!%20Confirmo%20mi%20asistencia%20para%20los%2015%20Años%20de%20Zarah%20Inés." target="_blank" class="btn" style="background: #25D366; color: #fff; border: none; font-size: 1.1rem; padding: 15px 30px;">
+                <i class="fab fa-whatsapp" style="font-size: 1.3rem;"></i> Confirmar por WhatsApp
+            </a>
+        </section>
+    </div>
+
+    <script>
+        // Reproductor de Música
+        const playBtn = document.getElementById('play-btn');
+        const audio = document.getElementById('bg-audio');
+        let isPlaying = false;
+
+        playBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                audio.pause();
+                playBtn.innerHTML = '<i class="fas fa-play"></i>';
+            } else {
+                audio.play();
+                playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            }
+            isPlaying = !isPlaying;
+        });
+
+        // Cuenta Regresiva (29 Mayo 2027)
+        const targetDate = new Date('May 29, 2027 19:00:00').getTime();
+
+        function updateTimer() {
+            const now = new Date().getTime();
+            const difference = targetDate - now;
+
+            if (difference > 0) {
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+                document.getElementById('days').innerText = String(days).padStart(2, '0');
+                document.getElementById('hours').innerText = String(hours).padStart(2, '0');
+                document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
+                document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
+            }
+        }
+
+        setInterval(updateTimer, 1000);
+        updateTimer();
+
+        // Fondo de Partículas Doradas / Polvo Mágico
+        const canvas = document.getElementById('canvas-bg');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        const particles = [];
+        for (let i = 0; i < 50; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 2 + 1,
+                color: '#d4af37',
+                velocity: { x: (Math.random() - 0.5) * 0.5, y: Math.random() * 0.5 + 0.2 }
+            });
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            particles.forEach(p => {
+                p.y += p.velocity.y;
+                p.x += p.velocity.x;
+
+                if (p.y > canvas.height) p.y = 0;
+                if (p.x > canvas.width) p.x = 0;
+                if (p.x < 0) p.x = canvas.width;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = p.color;
+                ctx.globalAlpha = 0.4;
+                ctx.fill();
+            });
+        }
+        animate();
+    </script>
+</body>
+</html>
